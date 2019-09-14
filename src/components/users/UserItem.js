@@ -1,7 +1,6 @@
 import React from "react";
 
-const UserItem = props => {
-  const { avatar_url, login, html_url } = props.user;
+const UserItem = ({ user: { avatar_url, login, html_url } }) => {
   return (
     <div className="card text-center">
       <img
@@ -13,7 +12,7 @@ const UserItem = props => {
       <h3>{login}</h3>
 
       <div>
-        <a href={html_url} className="btn btn-dark btn-sm my-1">
+        <a href={html_url} className="btn btn-dark btn-sm my-1" target="_blank">
           More
         </a>
       </div>
