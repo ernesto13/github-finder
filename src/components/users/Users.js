@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import UserItem from "./UserItem";
-
+//make functional component remove render
 export class Users extends Component {
-  state = {
-    users: [],
-    loading: false
-  };
-
   render() {
     return (
       <div style={userStyle}>
-        {this.state.users.map(user => (
+        {this.props.users.map(user => (
           <UserItem key={user.id} user={user} />
         ))}
       </div>
