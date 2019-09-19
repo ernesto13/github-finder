@@ -1,9 +1,16 @@
-import React, { Component } from "react";
-
+import React, { Fragment, Component } from "react";
+import Spinner from "../layout/Spinner";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 export class User extends Component {
   componentDidMount() {
-    this.props.getUser(this.props.match.prams.login);
+    this.props.getUser(this.props.match.params.login);
   }
+  static propTpes = {
+    loading: PropTypes.bool,
+    user: PropTypes.object.isRequired,
+    getUser: PropTypes.array.isRequired
+  };
 
   render() {
     const {
@@ -21,7 +28,21 @@ export class User extends Component {
       hireable
     } = this.props.user;
     const { loading } = this.props;
-    return <div>{name}</div>;
+    if (loading) return <Spinner />;
+
+    return (
+      <Fragment>
+        <Link to="/" className="btn btn-light">
+          Back to Search
+        </Link>
+        Hireable: {""}
+        {hireable ? (
+          <i className="fa fa-check text-success" />
+        ) : (
+          <i className="fa fa-times-circle text-danger" />
+        )}
+      </Fragment>
+    );
   }
 }
 export default User;
