@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { ifStatement } from "@babel/types";
+
 export class Search extends Component {
   state = {
     text: ""

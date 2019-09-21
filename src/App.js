@@ -43,22 +43,21 @@ class App extends Component {
 
   // get a single github user
 
-  getUser = async username => {
-    this.setState({ loading: true });
-    const res = await axios.get(
-      `https://api.github.com/users?${username}?client_id=${
-        process.env.REACT_APP_GITHUB_CLIENT_ID
-      }&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    );
-    this.setState({ user: res.data, loading: false });
-  };
-
   // getUser = async username => {
   //   this.setState({ loading: true });
-  //   const res = await axios.get(`https://api.github.com/users?q=${username}`);
+  //   const res = await axios.get(
+  //     `https://api.github.com/users?${username}?client_id=${
+  //       process.env.REACT_APP_GITHUB_CLIENT_ID
+  //     }&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+  //   );
   //   this.setState({ user: res.data, loading: false });
-  //   console.log(res.data.username);
   // };
+
+  getUser = async username => {
+    this.setState({ loading: true });
+    const res = await axios.get(`https://api.github.com/users?${username}`);
+    this.setState({ user: res.data, loading: false });
+  };
 
   getUserRepos = async username => {
     this.setState({ loading: true });
