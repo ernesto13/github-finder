@@ -13,12 +13,14 @@ class App extends Component {
   state = {
     users: [],
     user: {},
+    repos: [],
     loading: false,
     alert: null
   };
 
   async componentDidMount() {
     console.log(process.env.REACT_APP_GITHUB_CLIENT_SECRET);
+    console.log(process.env.REACT_APP_GITHUB_CLIENT_ID);
     this.setState({ loading: true });
     const res = await axios.get(
       `https://api.github.com/users?client_id=${
@@ -44,11 +46,28 @@ class App extends Component {
   getUser = async username => {
     this.setState({ loading: true });
     const res = await axios.get(
-      `https://api.github.com/users?q=${username}?client_id=${
+      `https://api.github.com/users?${username}?client_id=${
         process.env.REACT_APP_GITHUB_CLIENT_ID
       }&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
     this.setState({ user: res.data, loading: false });
+  };
+
+  // getUser = async username => {
+  //   this.setState({ loading: true });
+  //   const res = await axios.get(`https://api.github.com/users?q=${username}`);
+  //   this.setState({ user: res.data, loading: false });
+  //   console.log(res.data.username);
+  // };
+
+  getUserRepos = async username => {
+    this.setState({ loading: true });
+    const res = await axios.get(
+      `https://api.github.com/users?${username}repos/per_page=5&sort=created:asc&client_id=${
+        process.env.REACT_APP_GITHUB_CLIENT_ID
+      }&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+    this.setState({ repos: res.data, loading: false });
   };
 
   clearUsers = () => this.setState({ users: [], loading: false });
@@ -58,7 +77,7 @@ class App extends Component {
   };
 
   render() {
-    const { loading, users, user, location } = this.state;
+    const { loading, users, user, location, repos } = this.state;
     return (
       <Router>
         <div className="App">
@@ -91,7 +110,9 @@ class App extends Component {
                     <User
                       {...props}
                       getUser={this.getUser}
+                      getUserRepos={this.getUserRepos}
                       user={user}
+                      repos={repos}
                       location={location}
                       loading={loading}
                     />
