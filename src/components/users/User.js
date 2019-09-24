@@ -9,7 +9,7 @@ export class User extends Component {
     this.props.getUser(this.props.match.params.login);
     this.props.getUserRepos(this.props.match.params.login);
   }
-  static propTpes = {
+  static propTypes = {
     loading: PropTypes.bool,
     user: PropTypes.object.isRequired,
     getUser: PropTypes.func.isRequired,
